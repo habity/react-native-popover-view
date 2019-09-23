@@ -86,6 +86,7 @@ verticalOffset    | number   | Yes      | 0           | The amount to vertically
 popoverStyle      | object   | Yes      | {}          | The style of the popover itself. You can override the `borderRadius`, `backgroundColor`, or any other [`style` prop for a `View`](https://facebook.github.io/react-native/docs/view-style-props.html).
 arrowStyle        | object   | Yes      | {}          | The style of the arrow that points to the rect. Supported options are `width`, `height`, and `backgroundColor`. You can use `{backgroundColor: 'transparent'}` to hid the arrow completely.
 backgroundStyle   | object   | Yes      | {}          | The style of the background that fades in.
+containerStyle    | object   | Yes      | {}          | The style of the root container.
 onOpenStart       | function | Yes      |             | Callback to be fired when the open animation starts (before animation)
 onOpenComplete    | function | Yes      |             | Callback to be fired when the open animation ends (after animation)
 onRequestClose    | function | Yes      |             | Callback to be fired when the user taps outside the popover (on the background) or taps the "hardware" back button on Android
