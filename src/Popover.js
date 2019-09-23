@@ -11,6 +11,7 @@ const noop = () => {};
 const DEFAULT_ARROW_SIZE = new Size(16, 8);
 const DEFAULT_BORDER_RADIUS = 3;
 const FIX_SHIFT = Dimensions.get('window').height * 2;
+const CUSTOM_OFFSET_FROM_VIEW = 7
 
 const isIOS = Platform.OS === 'ios';
 
@@ -349,10 +350,10 @@ class Popover extends React.Component {
 
     var popoverOrigin = new Point(
       Math.min(maxX, Math.max(minX, preferedX)),
-      Math.max(minY, preferedY)
+      Math.max(minY, preferedY) - CUSTOM_OFFSET_FROM_VIEW
     );
 
-    var anchorPoint = new Point(fromRect.x + fromRect.width / 2.0, fromRect.y);
+    var anchorPoint = new Point(fromRect.x + fromRect.width / 2.0, fromRect.y - CUSTOM_OFFSET_FROM_VIEW);
 
     // Make sure the arrow isn't cut off
     anchorPoint.x = Math.max(anchorPoint.x, arrowSize.width / 2 + this.getBorderRadius());
@@ -390,10 +391,10 @@ class Popover extends React.Component {
 
     var popoverOrigin = new Point(
       Math.min(maxX, Math.max(minX, preferedX)),
-      preferedY
+      preferedY + CUSTOM_OFFSET_FROM_VIEW
     );
 
-    var anchorPoint = new Point(fromRect.x + fromRect.width / 2.0, fromRect.y + fromRect.height);
+    var anchorPoint = new Point(fromRect.x + fromRect.width / 2.0, fromRect.y + fromRect.height + CUSTOM_OFFSET_FROM_VIEW);
 
     // Make sure the arrow isn't cut off
     anchorPoint.x = Math.max(anchorPoint.x, arrowSize.width / 2 + this.getBorderRadius());
@@ -436,11 +437,11 @@ class Popover extends React.Component {
     let maxY = (displayArea.height - viewHeight) + displayArea.y;
 
     var popoverOrigin = new Point(
-      preferedX,
+      preferedX - CUSTOM_OFFSET_FROM_VIEW,
       Math.min(Math.max(minY, preferedY), maxY)
     );
 
-    var anchorPoint = new Point(fromRect.x, fromRect.y + fromRect.height / 2.0);
+    var anchorPoint = new Point(fromRect.x - CUSTOM_OFFSET_FROM_VIEW, fromRect.y + fromRect.height / 2.0);
 
     // Make sure the arrow isn't cut off
     anchorPoint.y = Math.max(anchorPoint.y, arrowSize.height / 2 + this.getBorderRadius());
@@ -479,11 +480,11 @@ class Popover extends React.Component {
     let maxY = (displayArea.height - viewHeight) + displayArea.y;
 
     var popoverOrigin = new Point(
-      preferedX,
+      preferedX + CUSTOM_OFFSET_FROM_VIEW,
       Math.min(Math.max(minY, preferedY), maxY)
     );
 
-    var anchorPoint = new Point(fromRect.x + fromRect.width, fromRect.y + fromRect.height / 2.0);
+    var anchorPoint = new Point(fromRect.x + fromRect.width + CUSTOM_OFFSET_FROM_VIEW, fromRect.y + fromRect.height / 2.0);
 
     // Make sure the arrow isn't cut off
     anchorPoint.y = Math.max(anchorPoint.y, arrowSize.height / 2 + this.getBorderRadius());
@@ -897,7 +898,7 @@ class Popover extends React.Component {
     });
 
     let contentView = (
-      <View pointerEvents="box-none" style={[styles.container, {left: 0}]} ref={ref => this.containerRef = ref}>
+      <View pointerEvents="box-none" style={[styles.container, {left: 0}, this.props.containerStyle]} ref={ref => this.containerRef = ref}>
         <SafeAreaView pointerEvents="none" style={{position: 'absolute', top: FIX_SHIFT, left: 0, right: 0, bottom: 0}}>
           <TouchableWithoutFeedback style={{flex: 1}} onLayout={evt => this.setDefaultDisplayArea(evt)}><View style={{flex: 1}} /></TouchableWithoutFeedback>
         </SafeAreaView>
@@ -1004,6 +1005,7 @@ Popover.defaultProps = {
   popoverStyle: {},
   arrowStyle: {},
   backgroundStyle: {},
+  containerStyle: {},
   onOpenStart: noop,
   onOpenComplete: noop,
   onRequestClose: noop,
@@ -1032,6 +1034,7 @@ Popover.propTypes = {
   popoverStyle: PropTypes.object,
   arrowStyle: PropTypes.object,
   backgroundStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
 
   // lifecycle
   onOpenStart: PropTypes.func,

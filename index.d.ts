@@ -33,6 +33,7 @@ export class Rect {
     popoverStyle?: StyleProp<ViewStyle>;
     arrowStyle?: StyleProp<ViewStyle>;
     backgroundStyle?: StyleProp<ViewStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
     onOpenStart?: () => void;
     onOpenComplete?: () => void;
     onRequestClose?: () => void;
