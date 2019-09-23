@@ -30,14 +30,17 @@ export function isPoint(point) {
 }
 
 export function getRectForRef(ref, callback) {
-  NativeModules.UIManager.measure(findNodeHandle(ref), (x0, y0, width, height, x, y) => {
-    callback(new Rect(x, y, width, height));
-  })
+  try {
+    NativeModules.UIManager.measure(findNodeHandle(ref), (x0, y0, width, height, x, y) => {
+      callback(new Rect(x, y, width, height));
+    })
+  } catch(e) {
+  }
 }
 
 export function runAfterChange(getFirst, second, func) {
   let count = 0; // Failsafe so that the interval doesn't run forever
-  let checkFunc = () => 
+  let checkFunc = () =>
     getFirst(first => {
       if (first !== second) {
         func();
